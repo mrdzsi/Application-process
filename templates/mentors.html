@@ -13,6 +13,25 @@
         </form>
     </div>
 
+    <br>
+
+        <div>
+        <form action="/mentors">
+            <label for="city-select">Filter by mentor location:</label>
+            <select name="city-name" id="city-select">
+                <option value="">Please choose a city</option>
+                <option value="Budapest">Budapest</option>
+                <option value="Miskolc">Miskolc</option>
+                <option value="Kraków">Kraków</option>
+                <option value="Bucharest">Bucharest</option>
+                <option value="Warsaw">Warsaw</option>
+            </select>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <br>
+
     <div id="mentors">
         {% for mentor in mentors %}
             {{ mentor.first_name + " " + mentor.last_name }} - {{ mentor.city }}<br>
