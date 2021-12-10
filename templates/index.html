@@ -9,8 +9,16 @@
         </ul>
     </nav>
 
-    <section class="search">
-{#        <h3>Search for applicants</h3>#}
+    <div>
+        <section class="search">
+            <h3>Search for applicants</h3>
 
-    </section>
+        <form action="/applicants-phone">
+            <label for="name-input">Enter first name:</label>
+            <input id="name-input" type="text" name="applicant-first-name">
+            <button type="submit">Search</button>
+        </form>
+        </section>
+    </div>
+
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+    <h1>Results:</h1>
+
+    <div id="applicants">
+        {% for valaki in applicant %}
+            {{ valaki.first_name + " " + valaki.last_name }} - {{ valaki.phone_number }}<br>
+        {% endfor %}
+    </div>
+
+{% endblock %}
