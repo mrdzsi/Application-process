@@ -33,16 +33,34 @@ def mentors_list():
 
 @app.route('/applicants-phone')
 def applicants_list():
-    applicant_first_name = request.args.get('applicant-name')
+    name = request.args.get('applicant-first-name')
+    email = request.args.get('email-ending')
+    applicant_details = None
 
-    if applicant_first_name:
-        applicant_details = data_manager.get_applicant_data_by_name(applicant_first_name)
-    else:
-        redirect('/index.html')
+    if name:
+        applicant_details = data_manager.get_applicant_data_by_name(name)
+    elif email:
+        applicant_details = data_manager.get_applicant_data_by_email(email)
+    elif not name and not email:
+        applicant_details = data_manager.get_applicants()
 
-    return render_template('applicants.html',
-                           applicant_first_name=applicant_first_name)
 
+    return render_template('applicants_results.html',
+                           render_applicants_details = applicant_details,
+                           )
+
+@app.route('/applicants')
+def applicants():
+    applicants = None
+    headers = None
+
+    headers = data_manager.get_column_names(headers)
+    applicants = data_manager.get_applicants()
+
+    return render_template(('applicants.html'),
+                           applicants=applicants,
+                           headers=headers
+                           )
 
 
 
