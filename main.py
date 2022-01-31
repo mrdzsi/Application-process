@@ -67,12 +67,12 @@ def applicants_list():
 @app.route('/applicants/<application_code>', methods=['GET', 'POST'])
 def display_applicant_details(application_code):
     applicant_details = data_manager.get_applicant_details(application_code)
-    print(applicant_details)
 
-    print(applicant_details[0])
-
-    for applicant in applicant_details:
-        print(applicant)
+    if request.method == 'POST':
+        new_phone = request.form['new_phone']
+        print(f'hello {new_phone}')
+        data_manager.update_phone_number(application_code, new_phone)
+        return redirect(url_for('display_applicant_details', application_code=application_code))
 
     return render_template('applicant_details.html',
                            applicant_details=applicant_details,

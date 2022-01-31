@@ -28,6 +28,21 @@
 
     </table>
 
+    {% for applicant in applicant_details %}
+
+        <form action="{{ url_for('display_applicant_details', application_code=applicant.application_code) }}"
+              method="post">
+
+            <label for="new-phone">New phone number: </label>
+            <input type="text" name="new_phone">
+
+            <button type="submit">Update</button>
+
+        </form>
+
+
+    {% endfor %}
+
     {% include 'footer.html' %}
 
 {% endblock %}

@@ -97,6 +97,17 @@ def get_applicant_details(cursor, application_code):
 
 
 @database_common.connection_handler
+def update_phone_number(cursor, application_code, new_phone):
+    query = sql.SQL("""
+        UPDATE applicant
+        SET phone_number = {new_phone}
+        WHERE application_code = {application_code};
+        """).format(application_code=sql.Literal(application_code),
+                    new_phone=sql.Literal(new_phone))
+    cursor.execute(query)
+
+
+@database_common.connection_handler
 def remove_applicant_by_email(cursor, email):
     query = ("""
         DELETE
