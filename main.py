@@ -31,7 +31,22 @@ def mentors_list():
                            city_name=city_name)
 
 
-@app.route('/applicants-phone')
+@app.route('/applicants', methods=['GET', 'POST'])
+def display_applicants():
+    application_code = None
+    applicants = None
+    headers = None
+
+    headers = data_manager.get_column_names(headers)
+    applicants = data_manager.get_applicants()
+
+    return render_template('applicants.html',
+                           applicants=applicants,
+                           headers=headers
+                           )
+
+
+@app.route('/applicants')
 def applicants_list():
     name = request.args.get('applicant-first-name')
     email = request.args.get('email-ending')
@@ -44,24 +59,41 @@ def applicants_list():
     elif not name and not email:
         applicant_details = data_manager.get_applicants()
 
-
-    return render_template('applicants_results.html',
-                           render_applicants_details = applicant_details,
+    return render_template('applicant_details.html',
+                           applicants_details=applicant_details,
                            )
 
-@app.route('/applicants')
-def applicants():
-    applicants = None
-    headers = None
 
-    headers = data_manager.get_column_names(headers)
-    applicants = data_manager.get_applicants()
+@app.route('/applicants/<application_code>', methods=['GET', 'POST'])
+def display_applicant_details(application_code):
+    applicant_details = data_manager.get_applicant_details(application_code)
+    print(applicant_details)
 
-    return render_template(('applicants.html'),
-                           applicants=applicants,
-                           headers=headers
+    print(applicant_details[0])
+
+    for applicant in applicant_details:
+        print(applicant)
+
+    return render_template('applicant_details.html',
+                           applicant_details=applicant_details,
+                           application_code=application_code
                            )
 
+
+@app.route('/add-applicant')
+def add_applicant():
+    pass
+
+
+# @app.route('/delete-applicant/<email-ending>', methods=['GET','POST'])
+# def delete_applicant(application_code):
+#     email = request.args.get('email-ending')
+#
+#     if email:
+#         data_manager.remove_applicant_by_email
+#         return redirect('/applicants')
+#
+#     pass
 
 
 if __name__ == '__main__':

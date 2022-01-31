@@ -6,3 +6,10 @@ body {
 .content-wrapper {
     padding: 10%;
 }
+
+table, th, td {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid black
+}

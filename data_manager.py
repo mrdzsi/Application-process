@@ -83,3 +83,26 @@ def get_column_names(cursor, headers):
     params = {'headers': headers}
     cursor.execute(query, params)
     return cursor.fetchall()
+
+
+@database_common.connection_handler
+def get_applicant_details(cursor, application_code):
+    query = sql.SQL("""
+        SELECT first_name, last_name, phone_number, email, application_code
+        FROM applicant
+        WHERE application_code = {application_code};
+        """).format(application_code=sql.Literal(application_code))
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+@database_common.connection_handler
+def remove_applicant_by_email(cursor, email):
+    query = ("""
+        DELETE
+        FROM applicant
+        WHERE email ~ %(email_ending)s;
+        """)
+    params = {'email_ending': email}
+    cursor.execute(query, params)
+    return cursor.fetchall()

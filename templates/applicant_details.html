@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 
+
 {% block content %}
+
+    <h1>Applicant details:</h1>
 
     <table>
         <colgroup span="5"></colgroup>
@@ -12,35 +15,18 @@
             <th> Application code</th>
         </tr>
         <tbody>
-        {% for applicant in applicants %}
+        {% for applicant in applicant_details %}
             <tr>
-
                 <td> {{ applicant.first_name }} </td>
                 <td> {{ applicant.last_name }} </td>
                 <td> {{ applicant.phone_number }} </td>
                 <td> {{ applicant.email }} </td>
-                <td>
-                    <a href="{{ url_for('display_applicant_details', application_code=applicant.application_code) }}">{{ applicant.application_code }}</a>
-                </td>
+                <td> {{ applicant.application_code }} </td>
             </tr>
         {% endfor %}
         </tbody>
 
     </table>
-
-    <a href={{ url_for('add_applicant') }}>Add an applicant</a>
-
-
-    <h3>Delete applicant by email</h3>
-
-    <form action="/applicants" method="post">
-        <label for="email-ending">Email address@</label>
-        <input id="email-ending" type="text" name="email-ending">
-        <button type="submit">Search</button>
-    </form>
-
-
-    <br>
 
     {% include 'footer.html' %}
 
