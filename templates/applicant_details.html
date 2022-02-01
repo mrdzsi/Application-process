@@ -40,8 +40,11 @@
 
         </form>
 
-
+        <a href="{{ url_for('delete_applicant', application_code=applicant.application_code) }}">Delete applicant</a>
+        
     {% endfor %}
+
+
 
     {% include 'footer.html' %}
 

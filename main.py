@@ -70,7 +70,6 @@ def display_applicant_details(application_code):
 
     if request.method == 'POST':
         new_phone = request.form['new_phone']
-        print(f'hello {new_phone}')
         data_manager.update_phone_number(application_code, new_phone)
         return redirect(url_for('display_applicant_details', application_code=application_code))
 
@@ -78,6 +77,14 @@ def display_applicant_details(application_code):
                            applicant_details=applicant_details,
                            application_code=application_code
                            )
+
+
+@app.route('/applicants/<application_code>/delete')
+def delete_applicant(application_code):
+    if request.method == 'GET':
+        data_manager.delete_applicant_by_id(application_code)
+
+        return redirect((url_for('display_applicants')))
 
 
 @app.route('/add-applicant')
