@@ -59,11 +59,8 @@ def applicants_list():
 
     if name:
         applicant_details = data_manager.get_applicant_data_by_name(name)
-        print(applicant_details)
     elif email_ending:
-        print(email_ending)
         applicant_details = data_manager.get_applicant_data_by_email_ending(email_ending)
-        print(applicant_details)
     elif not name and not email_ending:
         return redirect(url_for('index'))
 
@@ -95,20 +92,20 @@ def delete_applicant(application_code):
         return redirect((url_for('display_applicants')))
 
 
-@app.route('/add-applicant')
+@app.route('/add-applicant', methods=['GET', 'POST'])
 def add_applicant():
-    pass
+    new_applicant = {}
 
+    if request.method == 'POST':
+        new_applicant['first_name'] = request.form['first_name']
+        new_applicant['last_name'] = request.form['last_name']
+        new_applicant['phone_number'] = request.form['phone_number']
+        new_applicant['email'] = request.form['email']
+        new_applicant['application_code'] = data_manager.generate_id()
+        data_manager.add_new_applicant(new_applicant)
+        return redirect(url_for('display_applicant_details', application_code=new_applicant['application_code']))
 
-# @app.route('/delete-applicant/<email-ending>', methods=['GET','POST'])
-# def delete_applicant(application_code):
-#     email = request.args.get('email-ending')
-#
-#     if email:
-#         data_manager.remove_applicant_by_email
-#         return redirect('/applicants')
-#
-#     pass
+    return render_template('add-applicant.html')
 
 
 if __name__ == '__main__':

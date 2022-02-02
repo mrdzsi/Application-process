@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+<title>{% block page_title %} Add applicant {% endblock %} - Application process</title>
+
+{% block content %}
+
+    <form action="{{ url_for('add_applicant') }}" method="post">
+
+        <div>
+            <label for="first_name">First name: </label>
+            <input type="text" id="first_name" placeholder="Your first name" name="first_name">
+            <br>
+
+            <label for="last_name">Last name: </label>
+            <input type="text" id="last_name" placeholder="Your last name" name="last_name">
+            <br>
+        </div>
+
+        <div>
+            <label for="phone_number">Phone number: </label>
+            <input type="text" id="phone_number" placeholder="Your phone number" name="phone_number">
+            <br>
+            <label for="email">Email: </label>
+            <input type="text" id="email" placeholder="Your email address" name="email">
+        </div>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+{% endblock %}

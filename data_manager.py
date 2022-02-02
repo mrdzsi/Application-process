@@ -1,6 +1,7 @@
 from typing import List, Dict
 from psycopg2 import sql
 from psycopg2.extras import RealDictCursor
+from random import randint
 
 import database_common
 
@@ -72,17 +73,6 @@ def get_applicant_data_by_email_ending(cursor, email_ending):
     return cursor.fetchall()
 
 
-# def get_applicant_data_by_email(cursor, email):
-#     query = ("""
-#         SELECT first_name, last_name, phone_number
-#         FROM applicant
-#         WHERE email ~ %(email_ending)s ORDER BY first_name;
-#         """)
-#     params = {'email_ending': email}
-#     cursor.execute(query, params)
-#     return cursor.fetchall()
-
-
 @database_common.connection_handler
 def get_column_names(cursor, headers):
     query = ("""
@@ -135,3 +125,22 @@ def delete_applicant_by_email(cursor, email):
         WHERE email LIKE '%'  || {email} || '%';
         """).format(email=sql.Literal(email))
     cursor.execute(query)
+
+
+@database_common.connection_handler
+def add_new_applicant(cursor, new_applicant):
+    query = sql.SQL("""
+    INSERT INTO applicant (id, first_name, last_name, phone_number, email, application_code) 
+    VALUES (DEFAULT, {first_name}, {last_name}, {phone_number}, {email}, {application_code})
+    """).format(first_name=sql.Literal(new_applicant['first_name']),
+                last_name=sql.Literal(new_applicant['last_name']),
+                phone_number=sql.Literal(new_applicant['phone_number']),
+                email=sql.Literal(new_applicant['email']),
+                application_code=sql.Literal(new_applicant['application_code'])
+                )
+    cursor.execute(query)
+
+
+def generate_id():
+    random_id = randint(10000, 99999)
+    return random_id
