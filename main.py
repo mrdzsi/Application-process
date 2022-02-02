@@ -37,6 +37,11 @@ def display_applicants():
     applicants = None
     headers = None
 
+    if request.method == 'POST':
+        email = request.form['email-ending']
+        data_manager.delete_applicant_by_email(email)
+        return redirect(url_for('display_applicants'))
+
     headers = data_manager.get_column_names(headers)
     applicants = data_manager.get_applicants()
 
@@ -46,21 +51,24 @@ def display_applicants():
                            )
 
 
-@app.route('/applicants')
+@app.route('/applicants-phone')
 def applicants_list():
     name = request.args.get('applicant-first-name')
-    email = request.args.get('email-ending')
+    email_ending = request.args.get('email-ending')
     applicant_details = None
 
     if name:
         applicant_details = data_manager.get_applicant_data_by_name(name)
-    elif email:
-        applicant_details = data_manager.get_applicant_data_by_email(email)
-    elif not name and not email:
-        applicant_details = data_manager.get_applicants()
+        print(applicant_details)
+    elif email_ending:
+        print(email_ending)
+        applicant_details = data_manager.get_applicant_data_by_email_ending(email_ending)
+        print(applicant_details)
+    elif not name and not email_ending:
+        return redirect(url_for('index'))
 
-    return render_template('applicant_details.html',
-                           applicants_details=applicant_details,
+    return render_template('applicants-results.html',
+                           render_applicants_details=applicant_details,
                            )
 
 

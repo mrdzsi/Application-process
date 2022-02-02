@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+    <h1>Results:</h1>
+
+    <div id="applicants">
+        {% for applicant in render_applicants_details %}
+            {{ 'Name: ' + applicant.first_name + " " + applicant.last_name }},
+            {{ 'Phone number: ' + applicant.phone_number }}<br>
+        {% endfor %}
+    </div>
+
+    <br>
+
+    {% include 'footer.html' %}
+
+{% endblock %}

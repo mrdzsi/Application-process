@@ -62,15 +62,25 @@ def get_applicant_data_by_name(cursor, name):
 
 
 @database_common.connection_handler
-def get_applicant_data_by_email(cursor, email):
-    query = ("""
+def get_applicant_data_by_email_ending(cursor, email_ending):
+    query = sql.SQL("""
         SELECT first_name, last_name, phone_number
         FROM applicant
-        WHERE email ~ %(email_ending)s ORDER BY first_name;
-        """)
-    params = {'email_ending': email}
-    cursor.execute(query, params)
+        WHERE email LIKE {email};
+        """).format(email=sql.Literal('%' + email_ending))
+    cursor.execute(query)
     return cursor.fetchall()
+
+
+# def get_applicant_data_by_email(cursor, email):
+#     query = ("""
+#         SELECT first_name, last_name, phone_number
+#         FROM applicant
+#         WHERE email ~ %(email_ending)s ORDER BY first_name;
+#         """)
+#     params = {'email_ending': email}
+#     cursor.execute(query, params)
+#     return cursor.fetchall()
 
 
 @database_common.connection_handler
@@ -118,12 +128,10 @@ def delete_applicant_by_id(cursor, application_code):
 
 
 @database_common.connection_handler
-def remove_applicant_by_email(cursor, email):
-    query = ("""
+def delete_applicant_by_email(cursor, email):
+    query = sql.SQL("""
         DELETE
         FROM applicant
-        WHERE email ~ %(email_ending)s;
-        """)
-    params = {'email_ending': email}
-    cursor.execute(query, params)
-    return cursor.fetchall()
+        WHERE email LIKE '%'  || {email} || '%';
+        """).format(email=sql.Literal(email))
+    cursor.execute(query)
