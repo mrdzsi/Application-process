@@ -1,31 +1,41 @@
 {% extends "layout.html" %}
 
-<title>{% block page_title %} Add applicant {% endblock %} - Application process</title>
+<title>{% block page_title %} Add new applicant {% endblock %} - Application process</title>
 
 {% block content %}
 
-    <form action="{{ url_for('add_applicant') }}" method="post">
+    <div class="form search mb-3">
 
-        <div>
-            <label for="first_name">First name: </label>
-            <input type="text" id="first_name" placeholder="Your first name" name="first_name">
-            <br>
+        <h3>Enter applicant details</h3>
 
-            <label for="last_name">Last name: </label>
-            <input type="text" id="last_name" placeholder="Your last name" name="last_name">
-            <br>
-        </div>
+        <form action="{{ url_for('add_applicant') }}" method="post">
 
-        <div>
-            <label for="phone_number">Phone number: </label>
-            <input type="text" id="phone_number" placeholder="Your phone number" name="phone_number">
-            <br>
-            <label for="email">Email: </label>
-            <input type="text" id="email" placeholder="Your email address" name="email">
-        </div>
+            <div>
+                <label for="first_name" class="form-label">First name: </label>
+                <input type="text" id="first_name" placeholder="Type first name" name="first_name"
+                       class="form-control form-control-sm">
+                <br>
 
-        <button type="submit">Submit</button>
+                <label for="last_name" class="form-label">Last name: </label>
+                <input type="text" id="last_name" placeholder="Type last name" name="last_name"
+                       class="form-control form-control-sm">
+                <br>
+            </div>
 
-    </form>
+            <div>
+                <label for="phone_number" class="form-label">Phone number: </label>
+                <input type="text" id="phone_number" placeholder="Type phone number" name="phone_number"
+                       class="form-control form-control-sm">
+                <br>
+                <label for="email" class="form-label">Email: </label>
+                <input type="text" id="email" placeholder="Type email address" name="email"
+                       class="form-control form-control-sm">
+            </div>
+
+            <button type="submit" class="btn btn-success">Submit</button>
+
+        </form>
+
+    </div>
 
 {% endblock %}

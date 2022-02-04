@@ -3,28 +3,36 @@
 {% block content %}
     <nav class="menu">
         <h3>Choose a list</h3>
-        <ul>
-            <li><a href="{{ url_for('mentors_list') }}">Mentors</a></li>
-            <li><a href="{{ url_for('display_applicants')}}">Applicants</a></li>
-        </ul>
+
+        <div class="list-group">
+            <ul id="index-list">
+                <li><a href="{{ url_for('mentors_list') }}" class="list-group-item list-group-item-action">Mentors</a>
+                </li>
+                <li><a href="{{ url_for('display_applicants') }}" class="list-group-item list-group-item-action">Applicants</a>
+                </li>
+            </ul>
+        </div>
+
     </nav>
 
-    <div>
-        <section class="search">
+    <div class="form">
+        <section class="search mb-3">
             <h3>Search for applicants</h3>
 
             <form action="/applicants-phone">
-                <label for="name-input">Enter first name:</label>
-                <input id="name-input" type="text" name="applicant-first-name">
-                <button type="submit">Search</button>
+                <label for="name-input" class="form-label">First name:</label>
+                <input id="name-input" type="text" name="applicant-first-name" class="form-control form-control-sm"
+                       placeholder="Type first name ">
+                <button type="submit" class="btn btn-secondary">Search</button>
             </form>
 
             <br>
 
             <form action="/applicants-phone">
-                <label for="email-ending">Email address@</label>
-                <input id="email-ending" type="text" name="email-ending">
-                <button type="submit">Search</button>
+                <label for="email-ending" class="form-label">Email address:</label>
+                <input id="email-ending" type="text" name="email-ending" class="form-control form-control-sm"
+                       placeholder="Type email ending (e.g. gmail.com)">
+                <button type="submit" class="btn btn-secondary">Search</button>
             </form>
 
         </section>

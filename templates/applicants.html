@@ -1,15 +1,17 @@
 {% extends "layout.html" %}
 
+<title>{% block page_title %} Applicants list {% endblock %} - Application process</title>
+
 {% block content %}
 
-    <table>
+    <table class="table table-striped">
         <colgroup span="5"></colgroup>
         <tr>
             <th> First name</th>
             <th> Last name</th>
             <th> Phone number</th>
             <th> Email</th>
-            <th> Application code</th>
+            <th id="application-code-column"> Application code <br>(click for details)</th>
         </tr>
         <tbody>
         {% for applicant in applicants %}
@@ -19,8 +21,9 @@
                 <td> {{ applicant.last_name }} </td>
                 <td> {{ applicant.phone_number }} </td>
                 <td> {{ applicant.email }} </td>
-                <td>
-                    <a href="{{ url_for('display_applicant_details', application_code=applicant.application_code) }}">{{ applicant.application_code }}</a>
+                <td id="application-code-column">
+                    <a href="{{ url_for('display_applicant_details', application_code=applicant.application_code) }}"
+                       class="link-info">{{ applicant.application_code }}</a>
                 </td>
             </tr>
         {% endfor %}
@@ -28,19 +31,24 @@
 
     </table>
 
-    <a href={{ url_for('add_applicant') }}>Add an applicant</a>
+    <div id="add-new-applicant-button">
+        <a href={{ url_for('add_applicant') }}>
+            <button class="btn btn-success">Add new applicant</button>
+        </a>
+    </div>
 
 
-    <h3>Delete applicant by email</h3>
+    <div id="delete-applicant" class="form search mb-3">
+        <h3>Delete applicant by email</h3>
 
-    <form action="/applicants" method="post">
-        <label for="email-ending">Email address@</label>
-        <input id="email-ending" type="text" name="email-ending" placeholder="Type the domain name here">
-        <button type="submit">Remove</button>
-    </form>
+        <form action="/applicants" method="post">
+            <label for="email-ending" class="form-label">Email address:</label>
+            <input id="email-ending" type="text" name="email-ending" placeholder="Type email ending (e.g. gmail.com)"
+                   class="form-control form-control-sm">
+            <button type="submit" class="btn btn-danger">Remove</button>
+        </form>
 
-
-    <br>
+    </div>
 
     {% include 'footer.html' %}
 

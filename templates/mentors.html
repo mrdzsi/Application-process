@@ -5,29 +5,37 @@
 {% endblock %}
 
 {% block content %}
-    <div>
-        <form action="/mentors">
-            <label for="name-input">Filter by mentor last name:</label>
-            <input id="name-input" type="text" name="mentor-last-name">
-            <button type="submit">Search</button>
-        </form>
-    </div>
 
-    <br>
+    <div class="form search mb-3">
+
+        <h3>Search for mentors</h3>
 
         <div>
-        <form action="/mentors">
-            <label for="city-select">Filter by mentor location:</label>
-            <select name="city-name" id="city-select">
-                <option value="">Please choose a city</option>
-                <option value="Budapest">Budapest</option>
-                <option value="Miskolc">Miskolc</option>
-                <option value="Kraków">Kraków</option>
-                <option value="Bucharest">Bucharest</option>
-                <option value="Warsaw">Warsaw</option>
-            </select>
-            <button type="submit">Search</button>
-        </form>
+            <form action="/mentors">
+                <label for="name-input" class="form-label">Last name:</label>
+                <input id="name-input" type="text" name="mentor-last-name" class="form-control form-control-sm"
+                       placeholder="Type last name">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </form>
+        </div>
+
+        <br>
+
+        <div>
+            <form action="/mentors">
+                <label for="city-select" class="form-label">Location:</label>
+                <select name="city-name" id="city-select">
+                    <option value="">Please choose a city</option>
+                    <option value="Budapest">Budapest</option>
+                    <option value="Miskolc">Miskolc</option>
+                    <option value="Kraków">Kraków</option>
+                    <option value="Bucharest">Bucharest</option>
+                    <option value="Warsaw">Warsaw</option>
+                </select>
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </form>
+        </div>
+
     </div>
 
     <br>

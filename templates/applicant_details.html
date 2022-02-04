@@ -1,50 +1,61 @@
 {% extends "layout.html" %}
 
+<title>{% block page_title %} Applicant details {% endblock %} - Application process</title>
 
 {% block content %}
 
-    <h1>Applicant details:</h1>
+    <div>
 
-    <table>
-        <colgroup span="5"></colgroup>
-        <tr>
-            <th> First name</th>
-            <th> Last name</th>
-            <th> Phone number</th>
-            <th> Email</th>
-            <th> Application code</th>
-        </tr>
-        <tbody>
-        {% for applicant in applicant_details %}
+        <table class="table table-striped">
+            <colgroup span="5"></colgroup>
             <tr>
-                <td> {{ applicant.first_name }} </td>
-                <td> {{ applicant.last_name }} </td>
-                <td> {{ applicant.phone_number }} </td>
-                <td> {{ applicant.email }} </td>
-                <td> {{ applicant.application_code }} </td>
+                <th> First name</th>
+                <th> Last name</th>
+                <th> Phone number</th>
+                <th> Email</th>
+                <th id="application-code-column"> Application code</th>
             </tr>
-        {% endfor %}
-        </tbody>
+            <tbody>
+            {% for applicant in applicant_details %}
+                <tr>
+                    <td> {{ applicant.first_name }} </td>
+                    <td> {{ applicant.last_name }} </td>
+                    <td> {{ applicant.phone_number }} </td>
+                    <td> {{ applicant.email }} </td>
+                    <td id="application-code-column"> {{ applicant.application_code }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
 
-    </table>
+        </table>
+
+    </div>
+
+    <div class="form search mb-3">
+        {% for applicant in applicant_details %}
+
+
+
+            <form action="{{ url_for('display_applicant_details', application_code=applicant.application_code) }}"
+                  method="post">
+
+                <label for="new-phone" class="form-label">Phone number: </label>
+                <input type="text" name="new_phone" class="form-control form-control-sm"
+                       placeholder="Type new phone number">
+
+                <button type="submit" class="btn btn-success">Update</button>
+
+            </form>
+
+        {% endfor %}
+
+    </div>
 
     {% for applicant in applicant_details %}
-
-        <form action="{{ url_for('display_applicant_details', application_code=applicant.application_code) }}"
-              method="post">
-
-            <label for="new-phone">New phone number: </label>
-            <input type="text" name="new_phone">
-
-            <button type="submit">Update</button>
-
-        </form>
-
-        <a href="{{ url_for('delete_applicant', application_code=applicant.application_code) }}">Delete applicant</a>
-        
+        <a href="{{ url_for('delete_applicant', application_code=applicant.application_code) }}">
+            <button class="btn btn-danger">Delete applicant</button>
+        </a>
     {% endfor %}
-
-
 
     {% include 'footer.html' %}
 
